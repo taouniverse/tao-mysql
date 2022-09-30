@@ -46,8 +46,8 @@ func setup() (err error) {
 
 	// https://github.com/go-sql-driver/mysql#dsn-data-source-name
 	dsn := fmt.Sprintf(
-		"gorm:gorm@tcp(%s:%d)/gorm?charset=%s&parseTime=%+v&loc=%s",
-		M.Host, M.Port, M.Charset, M.ParseTime, M.Location)
+		"gorm:gorm@tcp(%s:%d)/gorm?charset=%s&parseTime=True&loc=%s",
+		M.Host, M.Port, M.Charset, M.Location)
 
 	DB, err = gorm.Open(mysql.New(mysql.Config{
 		DSN:                       dsn,

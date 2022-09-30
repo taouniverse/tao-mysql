@@ -28,7 +28,6 @@ type Config struct {
 	Host      string   `json:"host"`
 	Port      int      `json:"port"`
 	Charset   string   `json:"charset"`
-	ParseTime bool     `json:"parse_time"`
 	Location  string   `json:"local"`
 	RunAfters []string `json:"run_after,omitempty"`
 }
@@ -37,7 +36,6 @@ var defaultMysql = &Config{
 	Host:      "localhost",
 	Port:      3306,
 	Charset:   "utf8mb4,utf8",
-	ParseTime: true,
 	Location:  "UTC",
 	RunAfters: []string{},
 }
@@ -49,6 +47,18 @@ func (m *Config) Name() string {
 
 // ValidSelf with some default values
 func (m *Config) ValidSelf() {
+	if m.Host == "" {
+		m.Host = defaultMysql.Host
+	}
+	if m.Port == 0 {
+		m.Port = defaultMysql.Port
+	}
+	if m.Charset == "" {
+		m.Charset = defaultMysql.Charset
+	}
+	if m.Location == "" {
+		m.Location = defaultMysql.Location
+	}
 	if m.RunAfters == nil {
 		m.RunAfters = defaultMysql.RunAfters
 	}
