@@ -27,6 +27,9 @@ const ConfigKey = "mysql"
 type Config struct {
 	Host      string   `json:"host"`
 	Port      int      `json:"port"`
+	User      string   `json:"user"`
+	Password  string   `json:"password"`
+	DB        string   `json:"db"`
 	Charset   string   `json:"charset"`
 	Location  string   `json:"local"`
 	RunAfters []string `json:"run_after,omitempty"`
@@ -35,6 +38,8 @@ type Config struct {
 var defaultMysql = &Config{
 	Host:      "localhost",
 	Port:      3306,
+	User:      "tao",
+	Password:  "123456qwe",
 	Charset:   "utf8mb4,utf8",
 	Location:  "UTC",
 	RunAfters: []string{},
@@ -52,6 +57,12 @@ func (m *Config) ValidSelf() {
 	}
 	if m.Port == 0 {
 		m.Port = defaultMysql.Port
+	}
+	if m.User == "" {
+		m.User = defaultMysql.User
+	}
+	if m.Password == "" {
+		m.Password = defaultMysql.Password
 	}
 	if m.Charset == "" {
 		m.Charset = defaultMysql.Charset

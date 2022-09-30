@@ -21,9 +21,11 @@ jobs:
           go-version: 1.17
 
       - name: Set up MySQL
-        uses: shogo82148/actions-setup-mysql@v1.12.0
+        uses: mirromutth/mysql-action@v1.1
         with:
-          mysql-version: '8.0'
+          mysql version: '8.0'
+          mysql user: 'tao'
+          mysql password: '123456qwe'
 
       - name: Check out code
         uses: actions/checkout@v2
