@@ -15,12 +15,11 @@
 package mysql
 
 import (
+	"fmt"
 	"github.com/taouniverse/tao"
 
-	// Load the required dependencies.
-	// An error occurs when there was no package in the root directory.
-	_ "gorm.io/driver/mysql"
-	_ "gorm.io/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 /**
@@ -37,8 +36,31 @@ func init() {
 	}
 }
 
-// TODO setup unit with the global config 'M'
+// DB orm client of mysql
+var DB *gorm.DB
+
+// setup unit with the global config 'M'
 // execute when init tao universe
-func setup() error {
-	return nil
+func setup() (err error) {
+	var datetimePrecision = 2
+
+	// https://github.com/go-sql-driver/mysql#dsn-data-source-name
+	dsn := fmt.Sprintf(
+		"gorm:gorm@tcp(%s:%d)/gorm?charset=%s&parseTime=%+v&loc=%s",
+		M.Host, M.Port, M.Charset, M.ParseTime, M.Location)
+
+	DB, err = gorm.Open(mysql.New(mysql.Config{
+		DSN:                       dsn,
+		DefaultStringSize:         256,
+		DisableDatetimePrecision:  true,
+		DefaultDatetimePrecision:  &datetimePrecision,
+		DontSupportRenameIndex:    true,
+		DontSupportRenameColumn:   true,
+		SkipInitializeWithVersion: false,
+	}), &gorm.Config{})
+	if err != nil {
+		return tao.NewErrorWrapped("mysql: fail to create gorm client", err)
+	}
+
+	return
 }

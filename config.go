@@ -25,10 +25,20 @@ const ConfigKey = "mysql"
 // Config implements tao.Config
 // TODO declare the configuration you want & define some default values
 type Config struct {
+	Host      string   `json:"host"`
+	Port      int      `json:"port"`
+	Charset   string   `json:"charset"`
+	ParseTime bool     `json:"parse_time"`
+	Location  string   `json:"local"`
 	RunAfters []string `json:"run_after,omitempty"`
 }
 
 var defaultMysql = &Config{
+	Host:      "localhost",
+	Port:      3306,
+	Charset:   "utf8mb4,utf8",
+	ParseTime: true,
+	Location:  "UTC",
 	RunAfters: []string{},
 }
 
