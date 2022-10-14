@@ -23,7 +23,7 @@ import (
 const ConfigKey = "mysql"
 
 // Config implements tao.Config
-// TODO declare the configuration you want & define some default values
+// declare the configuration you want & define some default values
 type Config struct {
 	Host      string   `json:"host"`
 	Port      int      `json:"port"`
@@ -93,8 +93,14 @@ func (m *Config) ToTask() tao.Task {
 				return param, tao.NewError(tao.ContextCanceled, "%s: context has been canceled", ConfigKey)
 			default:
 			}
-			// TODO JOB code run after RunAfters, you can just do nothing here
-			return param, nil
+			// JOB code run after RunAfters, you can just do nothing here
+			db, err := DB.DB()
+			if err != nil {
+				return param, err
+			}
+
+			err = db.Ping()
+			return param, err
 		})
 }
 

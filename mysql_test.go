@@ -24,8 +24,6 @@ func TestTao(t *testing.T) {
 	err := tao.SetConfigPath("./test.yaml")
 	assert.Nil(t, err)
 
-	assert.Equal(t, M, defaultMysql)
-
 	db, err := DB.DB()
 	assert.Nil(t, err)
 
